@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>run</actionName>
+            <packagings>
+                <packaging>nbm-application</packaging>
+            </packagings>
+            <goals>
+                <goal>nbm:cluster-app</goal>
+                <goal>nbm:run-platform</goal>
+            </goals>
+            <properties>
+                <Env.JAVA_HOME>/home/al/.local/share/jvm/OpenJDK13U-jdk_x64_linux_hotspot_2020-02-24-07-25.tar/jdk-13.0.2+8</Env.JAVA_HOME>
+                <netbeans.run.params>"--fontsize\" \"15"</netbeans.run.params>
+                
+                
+                
+                
+                
+                
+                
+            </properties>
+        </action>
+        <action>
+            <actionName>run.single.main</actionName>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>process-classes</goal>
+                <goal>org.codehaus.mojo:exec-maven-plugin:3.0.0:exec</goal>
+            </goals>
+            <properties>
+                
+                <exec.appArgs>"--fontsize\" \"15"</exec.appArgs>
+                
+                <exec.args>${exec.vmArgs} --fontsize 15 -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
+                <exec.executable>/home/al/local/ugs/ugsplatform-linux/jdk/jdk-13.0.1+9-jre/bin/java</exec.executable>
+                <exec.mainClass>${packageClassName}</exec.mainClass>
+                <Env.JAVA_HOME>/home/al/.local/share/jvm/OpenJDK13U-jdk_x64_linux_hotspot_2020-02-24-07-25.tar/jdk-13.0.2+8</Env.JAVA_HOME>
+                <exec.classpathScope>${classPathScope}</exec.classpathScope>
+                
+                
+            </properties>
+        </action>
+        <action>
+            <actionName>debug</actionName>
+            <packagings>
+                <packaging>nbm-application</packaging>
+            </packagings>
+            <goals>
+                <goal>nbm:cluster-app</goal>
+                <goal>nbm:run-platform</goal>
+            </goals>
+            <properties>
+                <jpda.listen>true</jpda.listen>
+                <netbeans.run.params.debug>-J-agentlib:jdwp=transport=dt_socket,suspend=n,server=n,address=${jpda.address}</netbeans.run.params.debug>
+                <netbeans.run.params>"--fontsize\" \"15"</netbeans.run.params>
+            </properties>
+        </action>
+    </actions>

@@ -521,6 +521,82 @@
        </build>
      </profile>
 
+     <!-- Create the Armbian-64 (aarch64) application bundle -->
+     <profile>
+       <id>create-aarch64-package</id>
+       <build>
+         <plugins>
+           <plugin>
+             <groupId>org.apache.maven.plugins</groupId>
+             <artifactId>maven-antrun-plugin</artifactId>
+             <executions>
+               <execution>
+                 <id>create-aarch64-bundle</id>
+                 <phase>package</phase>
+                 <goals>
+                     <goal>run</goal>
+                 </goals>
+                 <configuration>
+                   <target>
+                     <!-- Clean -->
+                     <delete includeEmptyDirs="true" failonerror="false" removeNotFollowedSymlinks="true">
+                       <fileset dir="${project.build.directory}/${brandingToken}-aarch64" followsymlinks="false"/>
+                     </delete>
+                     <delete file="${project.build.directory}/${project.artifactId}-${project.version}-aarch64.tar.gz" failonerror="false"/>
+
+                     <!-- Create folders -->
+                     <mkdir dir="${project.build.directory}/${brandingToken}-aarch64"/>
+
+                     <!-- Copy application -->
+                     <copy todir="${project.build.directory}/${brandingToken}-aarch64">
+                       <fileset dir="${project.build.directory}/${brandingToken}"/>
+                     </copy>
+
+                     <!-- Download and untar JRE -->
+                     <exec dir="${project.build.directory}" executable="curl" failonerror="true">
+                       <arg line="-L"/>
+                       <arg line="${ugs.bundle.java.linux_aarch64.url}"/>
+                       <arg line="-o"/>
+                       <arg line="jre-linux_aarch64.tar.gz"/>
+                     </exec>
+
+                     <!-- Unzip archive -->
+                       <mkdir dir="${project.build.directory}/${brandingToken}-aarch64/jdk"/>
+                       <exec dir="${project.build.directory}" executable="tar" failonerror="true">
+                       <arg line="-zxf"/>
+                       <arg line="jre-linux_aarch64.tar.gz"/>
+                       <arg line="-C &quot;${brandingToken}-aarch64/jdk&quot;"/>
+                     </exec>
+
+                     <!-- Get the JRE folder name -->
+                     <path id="jre_name">
+                       <dirset dir="${project.build.directory}/${brandingToken}-aarch64/jdk" includes="jdk*" />
+                     </path>
+                     <property name="bundle.jvm.path" refid="jre_name" />
+                     <basename property="bundle.jvm.name" file="${bundle.jvm.path}"/>
+
+                     <!-- Configure relative JRE path into ugsplatform.conf -->
+                     <replace file="${project.build.directory}/${brandingToken}-aarch64/etc/${brandingToken}.conf" token="#jdkhome=&quot;/path/to/jdk&quot;" value="jdkhome=&quot;jdk/${bundle.jvm.name}&quot;"/>
+                     <chmod file="${project.build.directory}/${brandingToken}-aarch64/bin/**" perm="+x" type="both"/>
+
+                     <!-- Create Archive -->
+                     <exec dir="${project.build.directory}" executable="tar" failonerror="true">
+                       <env key="GZIP" value="-9"/>
+                       <arg value="-czvf"/>
+                       <arg value="linux_aarch64-${project.artifactId}-${project.version}.tar.gz"/>
+                       <arg value="-C"/>
+                       <arg value="${project.build.directory}"/>
+                       <arg value="${brandingToken}-aarch64"/>
+                     </exec>
+                   </target>
+                 </configuration>
+               </execution>
+             </executions>
+           </plugin>
+         </plugins>
+       </build>
+     </profile>
+
         <!-- Create the Linux application bundle -->
         <profile>
             <id>create-linux-package</id>

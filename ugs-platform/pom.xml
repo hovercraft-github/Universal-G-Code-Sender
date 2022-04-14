@@ -37,6 +37,8 @@
       <!-- Using JRE8 as a bug in JRE13 makes the PI to consume 100% cpu -->
       <ugs.bundle.java.rpi.url>https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u275-b01/OpenJDK8U-jre_arm_linux_hotspot_8u275b01.tar.gz</ugs.bundle.java.rpi.url>
       <ugs.bundle.java.linux.url>https://github.com/AdoptOpenJDK/openjdk13-binaries/releases/download/jdk-13.0.1%2B9/OpenJDK13U-jre_x64_linux_hotspot_13.0.1_9.tar.gz</ugs.bundle.java.linux.url>
+<!--      <ugs.bundle.java.linux_aarch64.url>https://github.com/AdoptOpenJDK/openjdk13-binaries/releases/download/jdk-13.0.2%2B8/OpenJDK13U-jre_aarch64_linux_hotspot_13.0.2_8.tar.gz</ugs.bundle.java.linux_aarch64.url>-->
+      <ugs.bundle.java.linux_aarch64.url>https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u322-b06/OpenJDK8U-jre_aarch64_linux_hotspot_8u322b06.tar.gz</ugs.bundle.java.linux_aarch64.url>
 
       <!-- Mac OS X signing identity - must match with a verified Apple developer certificate in the keychain -->
       <ugs.codesign.identity>Developer ID Application</ugs.codesign.identity>
@@ -48,7 +50,7 @@
       <!--==== Plugin Versions ====-->
       <ugs.maven-antrun-plugin.version>1.8</ugs.maven-antrun-plugin.version>
 
-      <ugs.nbm-maven-plugin.version>4.4</ugs.nbm-maven-plugin.version>
+      <ugs.nbm-maven-plugin.version>4.6</ugs.nbm-maven-plugin.version>
     </properties>
 
     <build>
